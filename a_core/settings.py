@@ -32,7 +32,6 @@ REDIS_URL = os.environ.get("REDIS_URL")
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = (os.getenv('IS_DEVELOPMENT', 'False') == 'True')
-#DEBUG = True
 
 
 ALLOWED_HOSTS = ['127.0.0.1',
@@ -96,21 +95,21 @@ TEMPLATES = [
 
 ASGI_APPLICATION = 'a_core.asgi.application'
 
-# if (os.getenv('IS_DEVELOPMENT', 'False') == 'True'):
-#     CHANNEL_LAYERS = {
-#         'default': {
-#             'BACKEND': 'channels.layers.InMemoryChannelLayer',
-#         }
-#     }
-# else:
-CHANNEL_LAYERS = {
-    'default': {
-        'BACKEND': 'channels_redis.core.RedisChannelLayer',
-        'CONFIG': {
-            'hosts': [(REDIS_URL)]
+if (os.getenv('IS_DEVELOPMENT', 'False') == 'True'):
+    CHANNEL_LAYERS = {
+        'default': {
+            'BACKEND': 'channels.layers.InMemoryChannelLayer',
         }
     }
-}
+else:
+    CHANNEL_LAYERS = {
+        'default': {
+            'BACKEND': 'channels_redis.core.RedisChannelLayer',
+            'CONFIG': {
+                'hosts': [(REDIS_URL)]
+            }
+        }
+    }
 
 
 # Database
