@@ -25,6 +25,7 @@ TEMPLATES_DIR = os.path.join(BASE_DIR, 'templates')
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = os.environ.get("SECRET_KEY")
+REDIS_URL = os.environ.get("REDIS_URL")
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -89,9 +90,18 @@ TEMPLATES = [
 #WSGI_APPLICATION = 'a_core.wsgi.application'
 ASGI_APPLICATION = 'a_core.asgi.application'
 
+# CHANNEL_LAYERS = {
+#     'default': {
+#         'BACKEND': 'channels.layers.InMemoryChannelLayer',
+#     }
+# }
+
 CHANNEL_LAYERS = {
     'default': {
-        'BACKEND': 'channels.layers.InMemoryChannelLayer',
+        'BACKEND': 'channels_redis.core.RedisChannelLayer',
+        'CONFIG': {
+            'hosts': [(REDIS_URL)]
+        }
     }
 }
 
