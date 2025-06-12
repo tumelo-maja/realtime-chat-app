@@ -31,7 +31,8 @@ SECRET_KEY = os.environ.get("SECRET_KEY")
 REDIS_URL = os.environ.get("REDIS_URL")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = (os.getenv('IS_DEVELOPMENT', 'False') == 'True')
+# DEBUG = (os.getenv('IS_DEVELOPMENT', 'False') == 'True')
+DEBUG = True
 
 
 ALLOWED_HOSTS = ['127.0.0.1',
