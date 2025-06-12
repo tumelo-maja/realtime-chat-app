@@ -35,7 +35,8 @@ REDIS_URL = os.environ.get("REDIS_URL")
 DEBUG = True
 
 
-ALLOWED_HOSTS = ['127.0.0.1',]
+ALLOWED_HOSTS = ['127.0.0.1',
+                 '.herokuapp.com',]
 
 
 # Application definition
@@ -95,12 +96,13 @@ TEMPLATES = [
 
 ASGI_APPLICATION = 'a_core.asgi.application'
 
-CHANNEL_LAYERS = {
-    'default': {
-        'BACKEND': 'channels.layers.InMemoryChannelLayer',
-    }
-}
-
+# if (os.getenv('IS_DEVELOPMENT', 'False') == 'True'):
+#     CHANNEL_LAYERS = {
+#         'default': {
+#             'BACKEND': 'channels.layers.InMemoryChannelLayer',
+#         }
+#     }
+# else:
 CHANNEL_LAYERS = {
     'default': {
         'BACKEND': 'channels_redis.core.RedisChannelLayer',
@@ -109,22 +111,6 @@ CHANNEL_LAYERS = {
         }
     }
 }
-
-if (os.getenv('IS_DEVELOPMENT', 'False') == 'True'):
-    CHANNEL_LAYERS = {
-        'default': {
-            'BACKEND': 'channels.layers.InMemoryChannelLayer',
-        }
-    }
-else:
-    CHANNEL_LAYERS = {
-        'default': {
-            'BACKEND': 'channels_redis.core.RedisChannelLayer',
-            'CONFIG': {
-                'hosts': [(REDIS_URL)]
-            }
-        }
-    }
 
 
 # Database
