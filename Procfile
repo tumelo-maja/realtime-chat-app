@@ -1,1 +1,1 @@
-daphne a_core.asgi:application -b 0.0.0.0 -p $PORT
+daphne a_core.asgi:application --port $PORT --bind 0.0.0.0 -v2
