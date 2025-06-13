@@ -5,3 +5,4 @@ core.python*
 env.py
 __pycache__/
 *.py[cod]
+a_rtchat/fixtures/ 
