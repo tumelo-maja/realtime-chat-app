@@ -1,0 +1,20 @@
+<div x-data="{ modal_open: false }">
+    <button @click.away="modal_open = true" class="button button-red">
+        Leave Chat
+    </button>
+    <div x-show="modal_open">
+        <div class="fixed inset-0 bg-gray-800 bg-opacity-80 z-50"></div>
+        <div class="fixed inset-0 z-50">
+            <div class="flex min-h-full justify-center items-center p-6">
+                <div @click.away="modal_open = false" class="rounded-lg bg-white text-left shadow-xl">
+                    <h1>Leave this chat?</h1>
+                    <form method="POST" action="{% url 'chatroom-leave' chat_group.group_name %}">
+                        {% csrf_token %}
+                        <button type="submit" class="button-red mt-4">Yes, I want to leave</button>
+                        <a @click.away="modal_open = false" class="button button-gray ml-1 cursor-pointer">Cancel</a>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
