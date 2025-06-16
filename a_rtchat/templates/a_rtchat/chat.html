@@ -63,6 +63,7 @@
                     ws-send _="on htmx:wsAfterSend reset() me">
                     {% csrf_token %}
                     {{ form }}
+                    <button type="submit" class=" rounded-xl"><span class="material-symbols-outlined">send</span></button>
                 </form>
             </div>
         </div>
