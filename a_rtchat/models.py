@@ -22,18 +22,18 @@ class GroupMessage(models.Model):
     file = models.FileField(upload_to='files/', blank=True, null=True)
     created = models.DateTimeField(auto_now_add=True)
 
-    def __str__(self):
-        if self.body:
-            return f"{self.author.username} : {self.body}"
-        elif self.file:
-            return f"{self.author.username} : {self.filename}"
-    
     @property
     def filename(self):
         if self.file:
             return os.path.basename(self.file.name)
         else:
             return None
+
+    def __str__(self):
+        if self.body:
+            return f"{self.author.username} : {self.body}"
+        elif self.file:
+            return f"{self.author.username} : {self.filename}"
 
     @property
     def is_image(self):

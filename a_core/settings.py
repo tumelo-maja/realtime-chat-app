@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 """
 
 from pathlib import Path
+import cloudinary
 import os
 import sys
 
@@ -18,9 +19,6 @@ import dj_database_url
 if os.path.isfile('env.py'):
     import env
 
-import cloudinary
-import cloudinary.uploader
-import cloudinary.api
 
 cloudinary.config( 
   	cloud_name = os.environ.get("CLOUDINARY_NAME"),
@@ -64,12 +62,59 @@ INSTALLED_APPS = [
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
+    'allauth.socialaccount.providers.google',
+    'allauth.socialaccount.providers.github',
+    'allauth.socialaccount.providers.twitter',
     'django_htmx',
     'cloudinary',
     'a_home',
     'a_users',
     'a_rtchat',
 ]
+
+SOCIALACCOUNT_PROVIDERS = {
+    'google': {
+        'APP': {
+            'client_id': os.environ.get("OAUTH_GOOGLE_CLIENT_ID"),
+            'secret': os.environ.get("OAUTH_GOOGLE_SECRET"),
+        },
+        'SCOPE': [
+            'profile',
+            'email',
+        ],
+        'AUTH_PARAMS': {
+            'access_type': 'online',
+            'prompt': 'consent',
+        }
+    },
+    'github': {
+        'APP': {
+            'client_id': os.environ.get("OAUTH_GITHUB_CLIENT_ID"),
+            'secret': os.environ.get("OAUTH_GITHUB_SECRET"),
+        },
+        'AUTH_PARAMS': {
+            'prompt': 'consent',
+        }
+    },
+    'twitter': {
+        'APP': {
+            'client_id': os.environ.get("OAUTH_TWITTER_CLIENT_ID"),
+            'secret': os.environ.get("OAUTH_TWITTER_SECRET"),
+        },
+    },
+    #     'twitter': {
+    #     'SCOPE': ['email'],  # The scopes you need. Usually 'email' or any others as needed.
+    #     'AUTH_PARAMS': {},
+    #     'OAUTH_HANDLER': 'allauth.socialaccount.providers.oauth2.client.OAuth2ErrorHandler',  # Optional: customize OAuth handler if needed
+    #     'APP': {
+    #         'client_id': 'YOUR_TWITTER_CLIENT_ID',  # Your Twitter client ID (API Key)
+    #         'secret': 'YOUR_TWITTER_SECRET',  # Your Twitter Secret (API Secret Key)
+    #         'key': 'YOUR_TWITTER_API_KEY',  # Your Twitter API Key
+    #         'secret': 'YOUR_TWITTER_API_SECRET_KEY',  # Your Twitter API Secret Key
+    #     },
+    # }
+
+}
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -192,3 +237,15 @@ EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 ACCOUNT_LOGIN_METHODS = {'email'}
 ACCOUNT_SIGNUP_FIELDS = ['email*', 'username*', 'password1*', 'password2*']
+
+SOCIALACCOUNT_LOGIN_ON_GET=True
+SOCIALACCOUNT_AUTO_SIGNUP = True
+ACCOUNT_UNIQUE_EMAIL = True
+SOCIALACCOUNT_EMAIL_AUTHENTICATION = True
+SOCIALACCOUNT_EMAIL_AUTHENTICATION_AUTO_CONNECT = True
+SOCIALACCOUNT_EMAIL_VERIFICATION = "none"
+
+ACCOUNT_ADAPTER = "a_users.adapters.CustomAccountAdapter"
+SOCIALACCOUNT_ADAPTER = "a_users.adapters.SocialAccountAdapter"
+
+SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
