@@ -114,7 +114,7 @@ SOCIALACCOUNT_PROVIDERS = {
     },    
 }
 
-ACCOUNT_HTTP_PROTOCOL = 'https'
+ACCOUNT_DEFAULT_HTTP_PROTOCOL = 'https'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
