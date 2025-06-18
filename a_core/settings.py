@@ -65,6 +65,7 @@ INSTALLED_APPS = [
     'allauth.socialaccount.providers.google',
     'allauth.socialaccount.providers.github',
     'allauth.socialaccount.providers.twitter',
+    'allauth.socialaccount.providers.facebook',
     'django_htmx',
     'cloudinary',
     'a_home',
@@ -102,18 +103,15 @@ SOCIALACCOUNT_PROVIDERS = {
             'secret': os.environ.get("OAUTH_TWITTER_SECRET"),
         },
     },
-    #     'twitter': {
-    #     'SCOPE': ['email'],  # The scopes you need. Usually 'email' or any others as needed.
-    #     'AUTH_PARAMS': {},
-    #     'OAUTH_HANDLER': 'allauth.socialaccount.providers.oauth2.client.OAuth2ErrorHandler',  # Optional: customize OAuth handler if needed
-    #     'APP': {
-    #         'client_id': 'YOUR_TWITTER_CLIENT_ID',  # Your Twitter client ID (API Key)
-    #         'secret': 'YOUR_TWITTER_SECRET',  # Your Twitter Secret (API Secret Key)
-    #         'key': 'YOUR_TWITTER_API_KEY',  # Your Twitter API Key
-    #         'secret': 'YOUR_TWITTER_API_SECRET_KEY',  # Your Twitter API Secret Key
-    #     },
-    # }
-
+    'facebook': {
+        'APP': {
+            'client_id': os.environ.get("OAUTH_FACEBOOK_CLIENT_ID"),
+            'secret': os.environ.get("OAUTH_FACEBOOK_SECRET"),
+        },
+        'AUTH_PARAMS': {
+            'auth_type': 'reauthenticate',
+        }
+    },    
 }
 
 MIDDLEWARE = [
