@@ -246,4 +246,4 @@ SOCIALACCOUNT_EMAIL_VERIFICATION = "none"
 ACCOUNT_ADAPTER = "a_users.adapters.CustomAccountAdapter"
 SOCIALACCOUNT_ADAPTER = "a_users.adapters.SocialAccountAdapter"
 
-SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
+#SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
